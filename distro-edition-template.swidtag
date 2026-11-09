@@ -5,21 +5,21 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://standards.iso.org/iso/19770/-2/2015/schema.xsd http://standards.iso.org/iso/19770/-2/2015-current/schema.xsd"
   xml:lang="en-US"
-  tagId="org.fedoraproject.Fedora-$version-$edition"
-  tagVersion="1"
-  name="Fedora"
+  tagId="io.github.HikariLinux.HikariFedoraRemix-$version-$edition"
+  tagVersion="2"
+  name="Hikari Fedora Remix"
   version="$version"
   versionScheme="unknown"
   supplemental="true">
   <Entity
-    name="Fedora Project"
-    regid="fedoraproject.org"
+    name="Hikari Linux"
+    regid="github.com/HikariLinux"
     role="tagCreator softwareCreator" />
   <Meta
-    product="Fedora"
+    product="Hikari Fedora Remix"
     colloquialVersion="$version"
     edition="$edition" />
   <Link
     rel="supplemental"
-    href="swid:org.fedoraproject.Fedora-$version" />
+    href="swid:io.github.HikariLinux.HikariFedoraRemix-$version" />
 </SoftwareIdentity>

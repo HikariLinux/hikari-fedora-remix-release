@@ -5,23 +5,23 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://standards.iso.org/iso/19770/-2/2015/schema.xsd http://standards.iso.org/iso/19770/-2/2015-current/schema.xsd"
   xml:lang="en-US"
-  tagId="org.fedoraproject.Fedora-$version"
-  tagVersion="1"
-  name="Fedora"
+  tagId="io.github.HikariLinux.HikariFedoraRemix-$version"
+  tagVersion="2"
+  name="Hikari Fedora Remix"
   version="$version"
   versionScheme="unknown"
   media="(OS:linux)">
   <Entity
-    name="Fedora Project"
-    regid="fedoraproject.org"
+    name="Hikari Linux"
+    regid="github.com/HikariLinux"
     role="tagCreator softwareCreator aggregator distributor licensor" />
   <Link
     rel="license"
     href="https://fedoraproject.org/wiki/Legal:Licenses/LicenseAgreement" />
   <Meta
-    product="Fedora"
+    product="Hikari Fedora Remix"
     colloquialVersion="$version"
-    summary="Linux distribution developed by the community-supported Fedora Project and sponsored by Red Hat, Inc."
+    summary="Hikari Linux Fedora Remix release identity"
     entitlementDataRequired="false"
     unspscCode="43233004"
     unspscVersion="20.0601" />

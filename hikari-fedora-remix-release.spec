@@ -83,15 +83,15 @@
 
 %global dist %{?eln:.eln%{eln}}
 
-Summary:        Asahi Fedora Remix release files
-Name:           asahi-fedora-remix-release
+Summary:        Hikari Fedora Remix release files
+Name:           hikari-fedora-remix-release
 Version:        %{dist_version}
 # The numbering is 0.<r> before a given Fedora Linux release is released,
 # with r starting at 1, and then just <r>, with r starting again at 1.
 # Use '%%autorelease -p' before final, and then drop the '-p'.
 Release:        %autorelease -p
 License:        MIT
-URL:            https://pagure.io/fedora-asahi/project
+URL:            https://github.com/HikariLinux/hikari-fedora-remix-release
 
 Source1:        LICENSE
 Source2:        Fedora-Legal-README.txt
@@ -115,21 +115,26 @@ Source25:       plasma-desktop.conf
 Source26:       80-kde.preset
 Source27:       81-desktop.preset
 Source28:       longer-default-shutdown-timeout.conf
+Source29:       hikari-logo.svg
 
 BuildArch:      noarch
 
+Obsoletes:      asahi-fedora-remix-release < 1:%{version}-%{release}
+
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-basic if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-basic
+# hikari-fedora-remix-release-identity-basic if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-basic
 
 # We replace fedora-release stuff
 Conflicts:      fedora-release < 1:%{version}-%{release}
@@ -142,19 +147,20 @@ BuildRequires:  redhat-rpm-config > 121-1
 BuildRequires:  systemd-rpm-macros
 
 %description
-Asahi Fedora Remix release files such as various /etc/ files that define the release
+Hikari Fedora Remix release files such as various /etc/ files that define the release
 and systemd preset files that determine which services are enabled by default.
 # See https://docs.fedoraproject.org/en-US/packaging-guidelines/DefaultServices/ for details.
 
-
 %package common
-Summary: Asahi Fedora release files
+Summary: Hikari Fedora Remix release files
+Provides:       asahi-fedora-remix-release-common = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-common < 1:%{version}-%{release}
 
-Requires:   asahi-fedora-remix-release-variant = %{version}-%{release}
-Suggests:   asahi-fedora-remix-release
+Requires:   hikari-fedora-remix-release-variant = %{version}-%{release}
+Suggests:   hikari-fedora-remix-release
 
 Requires:   fedora-repos(%{version})
-Requires:   asahi-fedora-remix-release-identity = %{version}-%{release}
+Requires:   hikari-fedora-remix-release-identity = %{version}-%{release}
 
 Obsoletes:  fedora-release-common < 1:%{version}-%{release}
 Provides:   fedora-release-common = 1:%{version}-%{release}
@@ -166,7 +172,7 @@ Provides:       system-release(releasever) = %{releasever}
 %endif
 
 # Fedora ships a generic-release package to make the creation of Remixes
-# easier, but it cannot coexist with the asahi-fedora-remix-release[-*] packages, so we
+# easier, but it cannot coexist with the hikari-fedora-remix-release[-*] packages, so we
 # will explicitly conflict with it.
 Conflicts:  generic-release
 
@@ -179,293 +185,336 @@ Release files common to all Editions and Spins of Fedora
 
 %if %{with basic}
 %package identity-basic
-Summary:        Package providing the basic Asahi Fedora Remix identity
+Summary:        Package providing the basic Hikari Fedora Remix identity
+Provides:       asahi-fedora-remix-release-identity-basic = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-basic < 1:%{version}-%{release}
 
 RemovePathPostfixes: .basic
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
+Conflicts:      hikari-fedora-remix-release-identity
 
 Obsoletes:      fedora-release-release-identity < 1:%{version}-%{release}
 Provides:       fedora-release-release-identity = 1:%{version}-%{release}
 
 %description identity-basic
-Provides the necessary files for an Asahi Fedora Remix installation that is not identifying
+Provides the necessary files for an Hikari Fedora Remix installation that is not identifying
 itself as a particular Edition or Spin.
 %endif
 
 
 %if %{with cinnamon}
 %package cinnamon
-Summary:        Base package for Asahi Fedora Remix Cinnamon-specific default configurations
+Summary:        Base package for Hikari Fedora Remix Cinnamon-specific default configurations
+Provides:       asahi-fedora-remix-release-cinnamon = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-cinnamon < 1:%{version}-%{release}
 
 RemovePathPostfixes: .cinnamon
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-cinnamon < 1:%{version}-%{release}
 Provides:       fedora-release-cinnamon = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-cinnamon if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-cinnamon
+# hikari-fedora-remix-release-identity-cinnamon if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-cinnamon
 
 
 %description cinnamon
-Provides a base package for Asahi Fedora Remix Cinnamon-specific configuration files to
+Provides a base package for Hikari Fedora Remix Cinnamon-specific configuration files to
 depend on as well as Cinnamon system defaults.
 
-
 %package identity-cinnamon
-Summary:        Package providing the identity for Asahi Fedora Remix Cinnamon Spin
+Summary:        Package providing the identity for Hikari Fedora Remix Cinnamon Spin
+Provides:       asahi-fedora-remix-release-identity-cinnamon = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-cinnamon < 1:%{version}-%{release}
 
 RemovePathPostfixes: .cinnamon
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-cinnamon = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-cinnamon = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-cinnamon < 1:%{version}-%{release}
 Provides:       fedora-release-identity-cinnamon = 1:%{version}-%{release}
 
 %description identity-cinnamon
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Cinnamon.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Cinnamon.
 %endif
 
 
 %if %{with cloud}
 %package cloud
-Summary:        Base package for Asahi Fedora Remix Cloud-specific default configurations
+Summary:        Base package for Hikari Fedora Remix Cloud-specific default configurations
+Provides:       asahi-fedora-remix-release-cloud = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-cloud < 1:%{version}-%{release}
 
 RemovePathPostfixes: .cloud
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-cloud < 1:%{version}-%{release}
 Provides:       fedora-release-cloud = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-cloud if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-cloud
+# hikari-fedora-remix-release-identity-cloud if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-cloud
 
 
 %description cloud
-Provides a base package for Asahi Fedora Remix Cloud-specific configuration files to
+Provides a base package for Hikari Fedora Remix Cloud-specific configuration files to
 depend on.
 
-
 %package identity-cloud
-Summary:        Package providing the identity for Asahi Fedora Remix Cloud Edition
+Summary:        Package providing the identity for Hikari Fedora Remix Cloud Edition
+Provides:       asahi-fedora-remix-release-identity-cloud = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-cloud < 1:%{version}-%{release}
 
 RemovePathPostfixes: .cloud
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-cloud = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-cloud = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-cloud < 1:%{version}-%{release}
 Provides:       fedora-release-identity-cloud = 1:%{version}-%{release}
 
 %description identity-cloud
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Cloud Edition.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Cloud Edition.
 %endif
 
 
 %if %{with compneuro}
 %package compneuro
-Summary:        Base package for Asahi Fedora Remix Comp Neuro specific default configurations
+Summary:        Base package for Hikari Fedora Remix Comp Neuro specific default configurations
+Provides:       asahi-fedora-remix-release-compneuro = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-compneuro < 1:%{version}-%{release}
 
 RemovePathPostfixes: .compneuro
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-compneuro < 1:%{version}-%{release}
 Provides:       fedora-release-compneuro = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-compneuro if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-compneuro
+# hikari-fedora-remix-release-identity-compneuro if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-compneuro
 
 
 %description compneuro
-Provides a base package for Asahi Fedora Remix Comp Neuro specific configuration files to
+Provides a base package for Hikari Fedora Remix Comp Neuro specific configuration files to
 depend on as well as Comp Neuro system defaults.
 
-
 %package identity-compneuro
-Summary:        Package providing the identity for Asahi Fedora Remix Comp Neuro Lab
+Summary:        Package providing the identity for Hikari Fedora Remix Comp Neuro Lab
+Provides:       asahi-fedora-remix-release-identity-compneuro = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-compneuro < 1:%{version}-%{release}
 
 RemovePathPostfixes: .compneuro
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-compneuro = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-compneuro = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-compneuro < 1:%{version}-%{release}
 Provides:       fedora-release-identity-compneuro = 1:%{version}-%{release}
 
 %description identity-compneuro
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Comp Neuro Lab.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Comp Neuro Lab.
 %endif
 
 
 %if %{with container}
 %package container
-Summary:        Base package for Asahi Fedora Remix container specific default configurations
+Summary:        Base package for Hikari Fedora Remix container specific default configurations
+Provides:       asahi-fedora-remix-release-container = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-container < 1:%{version}-%{release}
 
 RemovePathPostfixes: .container
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-container < 1:%{version}-%{release}
 Provides:       fedora-release-container = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-container if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-container
+# hikari-fedora-remix-release-identity-container if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-container
 
 
 %description container
-Provides a base package for Asahi Fedora Remix container specific configuration files to
+Provides a base package for Hikari Fedora Remix container specific configuration files to
 depend on as well as container system defaults.
 
-
 %package identity-container
-Summary:        Package providing the identity for Asahi Fedora Remix Container Base Image
+Summary:        Package providing the identity for Hikari Fedora Remix Container Base Image
+Provides:       asahi-fedora-remix-release-identity-container = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-container < 1:%{version}-%{release}
 
 RemovePathPostfixes: .container
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-container = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-container = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-container < 1:%{version}-%{release}
 Provides:       fedora-release-identity-container = 1:%{version}-%{release}
 
 %description identity-container
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
 itself as the Fedora Container Base Image.
 %endif
 
 
 %if %{with coreos}
 %package coreos
-Summary:        Base package for Asahi Fedora Remix CoreOS-specific default configurations
+Summary:        Base package for Hikari Fedora Remix CoreOS-specific default configurations
+Provides:       asahi-fedora-remix-release-coreos = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-coreos < 1:%{version}-%{release}
 
 RemovePathPostfixes: .coreos
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-coreos < 1:%{version}-%{release}
 Provides:       fedora-release-coreos = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-coreos if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-coreos
+# hikari-fedora-remix-release-identity-coreos if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-coreos
 
 
 %description coreos
-Provides a base package for Asahi Fedora Remix CoreOS Host-specific configuration files to
+Provides a base package for Hikari Fedora Remix CoreOS Host-specific configuration files to
 depend.
 
-
 %package identity-coreos
-Summary:        Package providing the identity for Asahi Fedora Remix CoreOS
+Summary:        Package providing the identity for Hikari Fedora Remix CoreOS
+Provides:       asahi-fedora-remix-release-identity-coreos = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-coreos < 1:%{version}-%{release}
 
 RemovePathPostfixes: .coreos
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-coreos = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-coreos = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-coreos < 1:%{version}-%{release}
 Provides:       fedora-release-identity-coreos = 1:%{version}-%{release}
 
 
 %description identity-coreos
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix CoreOS.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix CoreOS.
 %endif
 
 
 %if %{with designsuite}
 %package designsuite
-Summary:        Base package for Asahi Fedora Remix Design Suite specific default configurations
+Summary:        Base package for Hikari Fedora Remix Design Suite specific default configurations
+Provides:       asahi-fedora-remix-release-designsuite = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-designsuite < 1:%{version}-%{release}
 
 RemovePathPostfixes: .designsuite
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 Provides:       system-release-product
 
 Obsoletes:      fedora-release-designsuite < 1:%{version}-%{release}
 Provides:       fedora-release-designsuite = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-designsuite if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-designsuite
+# hikari-fedora-remix-release-identity-designsuite if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-designsuite
 
 
 %description designsuite
-Provides a base package for Asahi Fedora Remix Design Suite specific configuration files to
+Provides a base package for Hikari Fedora Remix Design Suite specific configuration files to
 depend on.
 
-
 %package identity-designsuite
-Summary:        Package providing the identity for Asahi Fedora Remix Design Suite Lab
+Summary:        Package providing the identity for Hikari Fedora Remix Design Suite Lab
+Provides:       asahi-fedora-remix-release-identity-designsuite = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-designsuite < 1:%{version}-%{release}
 
 RemovePathPostfixes: .designsuite
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-designsuite = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-designsuite = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-designsuite < 1:%{version}-%{release}
 Provides:       fedora-release-identity-designsuite = 1:%{version}-%{release}
 
 
 %description identity-designsuite
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Design Suite Lab.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Design Suite Lab.
 %endif
 
 
 %if %{with eln}
 %package eln
-Summary:        Base package for Asahi Fedora Remix ELN specific default configurations
+Summary:        Base package for Hikari Fedora Remix ELN specific default configurations
+Provides:       asahi-fedora-remix-release-eln = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-eln < 1:%{version}-%{release}
 
 RemovePathPostfixes: .eln
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:eln)
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 Provides:       system-release-product
 Requires:       fedora-repos-eln
 
@@ -475,19 +524,20 @@ Provides:       fedora-release-eln = 1:%{version}-%{release}
 Obsoletes:      redhat-release
 Provides:       redhat-release
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-eln if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-eln
+# hikari-fedora-remix-release-identity-eln if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-eln
 
 
 %description eln
-Provides a base package for Asahi Fedora Remix ELN specific configuration files to
+Provides a base package for Hikari Fedora Remix ELN specific configuration files to
 depend on.
 
-
 %package identity-eln
-Summary:        Package providing the identity for Asahi Fedora Remix ELN
+Summary:        Package providing the identity for Hikari Fedora Remix ELN
+Provides:       asahi-fedora-remix-release-identity-eln = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-eln < 1:%{version}-%{release}
 
 # When running a compose for ELN, we want to make sure that we pull in the
 # correct templates when lorax is installed. This Suggests: will clue
@@ -495,286 +545,325 @@ Summary:        Package providing the identity for Asahi Fedora Remix ELN
 Suggests: lorax-templates-rhel
 
 RemovePathPostfixes: .eln
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-eln = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-eln = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-eln < 1:%{version}-%{release}
 Provides:       fedora-release-identity-eln = 1:%{version}-%{release}
 
 
 %description identity-eln
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix ELN.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix ELN.
 %endif
 
 
 %if %{with iot}
 %package iot
-Summary:        Base package for Asahi Fedora Remix IoT specific default configurations
+Summary:        Base package for Hikari Fedora Remix IoT specific default configurations
+Provides:       asahi-fedora-remix-release-iot = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-iot < 1:%{version}-%{release}
 
 RemovePathPostfixes: .iot
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-iot < 1:%{version}-%{release}
 Provides:       fedora-release-iot = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-iot if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-iot
+# hikari-fedora-remix-release-identity-iot if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-iot
 
 
 %description iot
-Provides a base package for Asahi Fedora Remix IoT specific configuration files to
+Provides a base package for Hikari Fedora Remix IoT specific configuration files to
 depend on as well as IoT system defaults.
 
-
 %package identity-iot
-Summary:        Package providing the identity for Asahi Fedora Remix IoT Edition
+Summary:        Package providing the identity for Hikari Fedora Remix IoT Edition
+Provides:       asahi-fedora-remix-release-identity-iot = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-iot < 1:%{version}-%{release}
 
 RemovePathPostfixes: .iot
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-iot = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-iot = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-iot < 1:%{version}-%{release}
 Provides:       fedora-release-identity-iot = 1:%{version}-%{release}
 
 
 %description identity-iot
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix IoT Edition.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix IoT Edition.
 %endif
 
 
 %if %{with kde}
 %package kde
-Summary:        Base package for Asahi Fedora Remix KDE Plasma-specific default configurations
+Summary:        Base package for Hikari Fedora Remix KDE Plasma-specific default configurations
+Provides:       asahi-fedora-remix-release-kde = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-kde < 1:%{version}-%{release}
 
 RemovePathPostfixes: .kde
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-kde < 1:%{version}-%{release}
 Provides:       fedora-release-kde = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-kde if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-kde
+# hikari-fedora-remix-release-identity-kde if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-kde
 
 
 %description kde
-Provides a base package for Asahi Fedora Remix KDE Plasma-specific configuration files to
+Provides a base package for Hikari Fedora Remix KDE Plasma-specific configuration files to
 depend on as well as KDE Plasma system defaults.
 
-
 %package identity-kde
-Summary:        Package providing the identity for Asahi Fedora Remix KDE Plasma Spin
+Summary:        Package providing the identity for Hikari Fedora Remix KDE Plasma Spin
+Provides:       asahi-fedora-remix-release-identity-kde = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-kde < 1:%{version}-%{release}
 
 RemovePathPostfixes: .kde
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-kde = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-kde = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-kde < 1:%{version}-%{release}
 Provides:       fedora-release-identity-kde = 1:%{version}-%{release}
 
 
 %description identity-kde
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix KDE Plasma Spin.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix KDE Plasma Spin.
 %endif
 
 
 %if %{with matecompiz}
 %package matecompiz
-Summary:        Base package for Asahi Fedora Remix MATE-Compiz-specific default configurations
+Summary:        Base package for Hikari Fedora Remix MATE-Compiz-specific default configurations
+Provides:       asahi-fedora-remix-release-matecompiz = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-matecompiz < 1:%{version}-%{release}
 
 RemovePathPostfixes: .matecompiz
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-matecompiz < 1:%{version}-%{release}
 Provides:       fedora-release-matecompiz = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-matecompiz if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-matecompiz
+# hikari-fedora-remix-release-identity-matecompiz if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-matecompiz
 
 
 %description matecompiz
-Provides a base package for Asahi Fedora Remix MATE-compiz-specific configuration files to
+Provides a base package for Hikari Fedora Remix MATE-compiz-specific configuration files to
 depend on as well as MATE-Compiz system defaults.
 
-
 %package identity-matecompiz
-Summary:        Package providing the identity for Asahi Fedora Remix MATE-Compiz Spin
+Summary:        Package providing the identity for Hikari Fedora Remix MATE-Compiz Spin
+Provides:       asahi-fedora-remix-release-identity-matecompiz = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-matecompiz < 1:%{version}-%{release}
 
 RemovePathPostfixes: .matecompiz
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-matecompiz = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-matecompiz = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-matecompiz < 1:%{version}-%{release}
 Provides:       fedora-release-identity-matecompiz = 1:%{version}-%{release}
 
 
 %description identity-matecompiz
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix MATE-Compiz.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix MATE-Compiz.
 %endif
 
 
 %if %{with server}
 %package server
-Summary:        Base package for Asahi Fedora Remix Server-specific default configurations
+Summary:        Base package for Hikari Fedora Remix Server-specific default configurations
+Provides:       asahi-fedora-remix-release-server = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-server < 1:%{version}-%{release}
 
 RemovePathPostfixes: .server
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-server < 1:%{version}-%{release}
 Provides:       fedora-release-server = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-server if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-server
+# hikari-fedora-remix-release-identity-server if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-server
 
 
 %description server
-Provides a base package for Asahi Fedora Remix Server-specific configuration files to
+Provides a base package for Hikari Fedora Remix Server-specific configuration files to
 depend on.
 
-
 %package identity-server
-Summary:        Package providing the identity for Asahi Fedora Remix Server Edition
+Summary:        Package providing the identity for Hikari Fedora Remix Server Edition
+Provides:       asahi-fedora-remix-release-identity-server = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-server < 1:%{version}-%{release}
 
 RemovePathPostfixes: .server
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-server = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-server = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-server < 1:%{version}-%{release}
 Provides:       fedora-release-identity-server = 1:%{version}-%{release}
 
 
 %description identity-server
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Server Edition.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Server Edition.
 %endif
 
 
 %if %{with silverblue}
 %package silverblue
-Summary:        Base package for Asahi Fedora Remix Silverblue-specific default configurations
+Summary:        Base package for Hikari Fedora Remix Silverblue-specific default configurations
+Provides:       asahi-fedora-remix-release-silverblue = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-silverblue < 1:%{version}-%{release}
 
 RemovePathPostfixes: .silverblue
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
-Requires:       asahi-fedora-remix-release-ostree-desktop = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-ostree-desktop = %{version}-%{release}
 
 Obsoletes:      fedora-release-silverblue < 1:%{version}-%{release}
 Provides:       fedora-release-silverblue = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-silverblue if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-silverblue
+# hikari-fedora-remix-release-identity-silverblue if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-silverblue
 
 
 %description silverblue
-Provides a base package for Asahi Fedora Remix Silverblue-specific configuration files to
+Provides a base package for Hikari Fedora Remix Silverblue-specific configuration files to
 depend on as well as Silverblue system defaults.
 
-
 %package identity-silverblue
-Summary:        Package providing the identity for Asahi Fedora Remix Silverblue
+Summary:        Package providing the identity for Hikari Fedora Remix Silverblue
+Provides:       asahi-fedora-remix-release-identity-silverblue = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-silverblue < 1:%{version}-%{release}
 
 RemovePathPostfixes: .silverblue
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-silverblue = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-silverblue = %{version}-%{release}
 
 
 %description identity-silverblue
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Silverblue.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Silverblue.
 %endif
 
 
 %if %{with kinoite}
 %package kinoite
-Summary:        Base package for Asahi Fedora Remix Kinoite-specific default configurations
+Summary:        Base package for Hikari Fedora Remix Kinoite-specific default configurations
+Provides:       asahi-fedora-remix-release-kinoite = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-kinoite < 1:%{version}-%{release}
 
 RemovePathPostfixes: .kinoite
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
-Requires:       asahi-fedora-remix-release-ostree-desktop = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-ostree-desktop = %{version}-%{release}
 
 Obsoletes:      fedora-release-kinoite < 1:%{version}-%{release}
 Provides:       fedora-release-kinoite = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-kinoite if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-kinoite
+# hikari-fedora-remix-release-identity-kinoite if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-kinoite
 
 
 %description kinoite
-Provides a base package for Asahi Fedora Remix Kinoite-specific configuration files to
+Provides a base package for Hikari Fedora Remix Kinoite-specific configuration files to
 depend on as well as Kinoite system defaults.
 
-
 %package identity-kinoite
-Summary:        Package providing the identity for Asahi Fedora Remix Kinoite
+Summary:        Package providing the identity for Hikari Fedora Remix Kinoite
+Provides:       asahi-fedora-remix-release-identity-kinoite = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-kinoite < 1:%{version}-%{release}
 
 RemovePathPostfixes: .kinoite
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-kinoite = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-kinoite = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-kinoite < 1:%{version}-%{release}
 Provides:       fedora-release-identity-kinoite = 1:%{version}-%{release}
 
 
 %description identity-kinoite
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Kinoite.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Kinoite.
 %endif
 
 
 %if %{with ostree_desktop}
 %package ostree-desktop
 Summary:        Configuration package for rpm-ostree variants to add rpm-ostree polkit rules
+Provides:       asahi-fedora-remix-release-ostree-desktop = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-ostree-desktop < 1:%{version}-%{release}
 
 %description ostree-desktop
 Configuration package for rpm-ostree variants to add rpm-ostree polkit rules
@@ -783,395 +872,449 @@ Configuration package for rpm-ostree variants to add rpm-ostree polkit rules
 
 %if %{with snappy}
 %package snappy
-Summary:        Base package for Asahi Fedora Remix snap specific default configurations
+Summary:        Base package for Hikari Fedora Remix snap specific default configurations
+Provides:       asahi-fedora-remix-release-snappy = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-snappy < 1:%{version}-%{release}
 
 RemovePathPostfixes: .snappy
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-snappy < 1:%{version}-%{release}
 Provides:       fedora-release-snappy = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-snappy if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-snappy
+# hikari-fedora-remix-release-identity-snappy if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-snappy
 
 
 %description snappy
-Provides a base package for Asahi Fedora Remix snap specific configuration files to
+Provides a base package for Hikari Fedora Remix snap specific configuration files to
 depend on as well as Snappy system defaults.
 
-
 %package identity-snappy
-Summary:        Package providing the identity for Asahi Fedora Remix Snappy environments
+Summary:        Package providing the identity for Hikari Fedora Remix Snappy environments
+Provides:       asahi-fedora-remix-release-identity-snappy = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-snappy < 1:%{version}-%{release}
 
 RemovePathPostfixes: .snappy
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-snappy = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-snappy = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-snappy < 1:%{version}-%{release}
 Provides:       fedora-release-identity-snappy = 1:%{version}-%{release}
 
 
 %description identity-snappy
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix's snappy environment.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix's snappy environment.
 %endif
 
 
 %if %{with soas}
 %package soas
-Summary:        Base package for Asahi Fedora Remix Sugar on a Stick-specific default configurations
+Summary:        Base package for Hikari Fedora Remix Sugar on a Stick-specific default configurations
+Provides:       asahi-fedora-remix-release-soas = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-soas < 1:%{version}-%{release}
 
 RemovePathPostfixes: .soas
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-soas < 1:%{version}-%{release}
 Provides:       fedora-release-soas = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-soas if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-soas
+# hikari-fedora-remix-release-identity-soas if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-soas
 
 
 %description soas
-Provides a base package for Asahi Fedora Remix Sugar on a Stick-specific configuration
+Provides a base package for Hikari Fedora Remix Sugar on a Stick-specific configuration
 files to depend on as well as SoaS system defaults.
 
-
 %package identity-soas
-Summary:        Package providing the identity for Asahi Fedora Remix Sugar on a Stick
+Summary:        Package providing the identity for Hikari Fedora Remix Sugar on a Stick
+Provides:       asahi-fedora-remix-release-identity-soas = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-soas < 1:%{version}-%{release}
 
 RemovePathPostfixes: .soas
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-soas = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-soas = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-soas < 1:%{version}-%{release}
 Provides:       fedora-release-identity-soas = 1:%{version}-%{release}
 
 
 %description identity-soas
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Sugar on a Stick.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Sugar on a Stick.
 %endif
 
 
 %if %{with workstation}
 %package workstation
-Summary:        Base package for Asahi Fedora Remix Workstation-specific default configurations
+Summary:        Base package for Hikari Fedora Remix Workstation-specific default configurations
+Provides:       asahi-fedora-remix-release-workstation = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-workstation < 1:%{version}-%{release}
 
 RemovePathPostfixes: .workstation
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 Provides:       system-release-product
 
 Obsoletes:      fedora-release-workstation < 1:%{version}-%{release}
 Provides:       fedora-release-workstation = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-workstation if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-workstation
+# hikari-fedora-remix-release-identity-workstation if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-workstation
 
 
 %description workstation
-Provides a base package for Asahi Fedora Remix Workstation-specific configuration files to
+Provides a base package for Hikari Fedora Remix Workstation-specific configuration files to
 depend on.
 
-
 %package identity-workstation
-Summary:        Package providing the identity for Asahi Fedora Remix Workstation Edition
+Summary:        Package providing the identity for Hikari Fedora Remix Workstation Edition
+Provides:       asahi-fedora-remix-release-identity-workstation = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-workstation < 1:%{version}-%{release}
 
 RemovePathPostfixes: .workstation
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-workstation = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-workstation = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-workstation < 1:%{version}-%{release}
 Provides:       fedora-release-identity-workstation = 1:%{version}-%{release}
 
 
 %description identity-workstation
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Workstation Edition.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Workstation Edition.
 %endif
 
 
 %if %{with xfce}
 %package xfce
-Summary:        Base package for Asahi Fedora Remix Xfce specific default configurations
+Summary:        Base package for Hikari Fedora Remix Xfce specific default configurations
+Provides:       asahi-fedora-remix-release-xfce = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-xfce < 1:%{version}-%{release}
 
 RemovePathPostfixes: .xfce
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-xfce < 1:%{version}-%{release}
 Provides:       fedora-release-xfce = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-xfce if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-xfce
+# hikari-fedora-remix-release-identity-xfce if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-xfce
 
 
 %description xfce
-Provides a base package for Asahi Fedora Remix Xfce specific configuration files to
+Provides a base package for Hikari Fedora Remix Xfce specific configuration files to
 depend on as well as Xfce system defaults.
 
-
 %package identity-xfce
-Summary:        Package providing the identity for Asahi Fedora Remix Xfce Spin
+Summary:        Package providing the identity for Hikari Fedora Remix Xfce Spin
+Provides:       asahi-fedora-remix-release-identity-xfce = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-xfce < 1:%{version}-%{release}
 
 RemovePathPostfixes: .xfce
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-xfce = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-xfce = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-xfce < 1:%{version}-%{release}
 Provides:       fedora-release-identity-xfce = 1:%{version}-%{release}
 
 
 %description identity-xfce
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Xfce.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Xfce.
 %endif
 
 
 %if %{with i3}
 %package i3
-Summary:        Base package for Asahi Fedora Remix i3 specific default configurations
+Summary:        Base package for Hikari Fedora Remix i3 specific default configurations
+Provides:       asahi-fedora-remix-release-i3 = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-i3 < 1:%{version}-%{release}
 
 RemovePathPostfixes: .i3
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-i3 < 1:%{version}-%{release}
 Provides:       fedora-release-i3 = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-i3 if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-i3
+# hikari-fedora-remix-release-identity-i3 if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-i3
 
 
 %description i3
-Provides a base package for Asahi Fedora Remix i3 specific configuration files to
+Provides a base package for Hikari Fedora Remix i3 specific configuration files to
 depend on.
 
-
 %package identity-i3
-Summary:        Package providing the identity for Asahi Fedora Remix i3 Spin
+Summary:        Package providing the identity for Hikari Fedora Remix i3 Spin
+Provides:       asahi-fedora-remix-release-identity-i3 = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-i3 < 1:%{version}-%{release}
 
 RemovePathPostfixes: .i3
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-i3 = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-i3 = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-i3 < 1:%{version}-%{release}
 Provides:       fedora-release-identity-i3 = 1:%{version}-%{release}
 
 
 %description identity-i3
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix i3.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix i3.
 %endif
 
 
 %if %{with lxqt}
 %package lxqt
-Summary:        Base package for Asahi Fedora Remix LXQt specific default configurations
+Summary:        Base package for Hikari Fedora Remix LXQt specific default configurations
+Provides:       asahi-fedora-remix-release-lxqt = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-lxqt < 1:%{version}-%{release}
 
 RemovePathPostfixes: .lxqt
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-lxqt < 1:%{version}-%{release}
 Provides:       fedora-release-lxqt = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-lxqt if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-lxqt
+# hikari-fedora-remix-release-identity-lxqt if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-lxqt
 
 
 %description lxqt
-Provides a base package for Asahi Fedora Remix LXQt specific configuration files to
+Provides a base package for Hikari Fedora Remix LXQt specific configuration files to
 depend on as well as LXQt system defaults.
 
-
 %package identity-lxqt
-Summary:        Package providing the identity for Asahi Fedora Remix LXQt Spin
+Summary:        Package providing the identity for Hikari Fedora Remix LXQt Spin
+Provides:       asahi-fedora-remix-release-identity-lxqt = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-lxqt < 1:%{version}-%{release}
 
 RemovePathPostfixes: .lxqt
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-lxqt = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-lxqt = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-lxqt < 1:%{version}-%{release}
 Provides:       fedora-release-identity-lxqt = 1:%{version}-%{release}
 
 %description identity-lxqt
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix LXQt.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix LXQt.
 %endif
 
 %if %{with budgie}
 %package budgie
-Summary:        Base package for Asahi Fedora Remix Budgie specific default configurations
+Summary:        Base package for Hikari Fedora Remix Budgie specific default configurations
+Provides:       asahi-fedora-remix-release-budgie = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-budgie < 1:%{version}-%{release}
 
 RemovePathPostfixes: .budgie
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-budgie < 1:%{version}-%{release}
 Provides:       fedora-release-budgie = 1:%{version}-%{release}
 
-# asahi-fedora-remix-release-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-release-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-budgie if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-budgie
+# hikari-fedora-remix-release-identity-budgie if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-budgie
 
 
 %description budgie
-Provides a base package for Asahi Fedora Remix Budgie specific configuration files to
+Provides a base package for Hikari Fedora Remix Budgie specific configuration files to
 depend on as well as Budgie system defaults.
 
-
 %package identity-budgie
-Summary:        Package providing the identity for Asahi Fedora Remix Budgie Spin
+Summary:        Package providing the identity for Hikari Fedora Remix Budgie Spin
+Provides:       asahi-fedora-remix-release-identity-budgie = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-budgie < 1:%{version}-%{release}
 
 RemovePathPostfixes: .budgie
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-budgie = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-budgie = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-budgie < 1:%{version}-%{release}
 Provides:       fedora-release-identity-budgie = 1:%{version}-%{release}
 
 %description identity-budgie
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Budgie.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Budgie.
 %endif
 
 
 %if %{with sway}
 %package sway
-Summary:        Base package for Asahi Fedora Remix Sway specific default configurations
+Summary:        Base package for Hikari Fedora Remix Sway specific default configurations
+Provides:       asahi-fedora-remix-release-sway = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-sway < 1:%{version}-%{release}
 
 RemovePathPostfixes: .sway
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
 
 Obsoletes:      fedora-release-sway < 1:%{version}-%{release}
 Provides:       fedora-release-sway = 1:%{version}-%{release}
 
-# asahi-fedora-remix-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-sway if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-sway
+# hikari-fedora-remix-release-identity-sway if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-sway
 
 
 %description sway
-Provides a base package for Asahi Fedora Remix Sway specific configuration files to
+Provides a base package for Hikari Fedora Remix Sway specific configuration files to
 depend on.
 
-
 %package identity-sway
-Summary:        Package providing the identity for Asahi Fedora Remix Sway Spin
+Summary:        Package providing the identity for Hikari Fedora Remix Sway Spin
+Provides:       asahi-fedora-remix-release-identity-sway = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-sway < 1:%{version}-%{release}
 
 RemovePathPostfixes: .sway
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-sway = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-sway = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-sway < 1:%{version}-%{release}
 Provides:       fedora-release-identity-sway = 1:%{version}-%{release}
 
 
 %description identity-sway
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Sway.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Sway.
 %endif
 
 
 %if %{with sericea}
 %package sericea
-Summary:        Base package for Asahi Fedora Remix Sericea specific default configurations
+Summary:        Base package for Hikari Fedora Remix Sericea specific default configurations
+Provides:       asahi-fedora-remix-release-sericea = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-sericea < 1:%{version}-%{release}
 
 RemovePathPostfixes: .sericea
+Provides:       hikari-fedora-remix-release = %{version}-%{release}
 Provides:       asahi-fedora-remix-release = %{version}-%{release}
+Provides:       hikari-fedora-remix-release-variant = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
-Requires:       asahi-fedora-remix-release-common = %{version}-%{release}
-Requires:       asahi-fedora-remix-release-ostree-desktop = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-common = %{version}-%{release}
+Requires:       hikari-fedora-remix-release-ostree-desktop = %{version}-%{release}
 
 Obsoletes:      fedora-release-sericea < 1:%{version}-%{release}
 Provides:       fedora-release-sericea = 1:%{version}-%{release}
 
-# asahi-fedora-remix-common Requires: asahi-fedora-remix-release-identity, so at least one
+# hikari-fedora-remix-common Requires: hikari-fedora-remix-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# asahi-fedora-remix-release-identity-sericea if nothing else is already doing so.
-Recommends:     asahi-fedora-remix-release-identity-sericea
+# hikari-fedora-remix-release-identity-sericea if nothing else is already doing so.
+Recommends:     hikari-fedora-remix-release-identity-sericea
 
 
 %description sericea
-Provides a base package for Asahi Fedora Remix Sericea specific configuration
+Provides a base package for Hikari Fedora Remix Sericea specific configuration
 files to depend on.
 
-
 %package identity-sericea
-Summary:        Package providing the identity for Asahi Fedora Remix Sericea
+Summary:        Package providing the identity for Hikari Fedora Remix Sericea
+Provides:       asahi-fedora-remix-release-identity-sericea = %{version}-%{release}
+Obsoletes:      asahi-fedora-remix-release-identity-sericea < 1:%{version}-%{release}
 
 RemovePathPostfixes: .sericea
+Provides:       hikari-fedora-remix-release-identity = %{version}-%{release}
 Provides:       asahi-fedora-remix-release-identity = %{version}-%{release}
-Conflicts:      asahi-fedora-remix-release-identity
-Requires(meta): asahi-fedora-remix-release-sericea = %{version}-%{release}
+Conflicts:      hikari-fedora-remix-release-identity
+Requires(meta): hikari-fedora-remix-release-sericea = %{version}-%{release}
 
 Obsoletes:      fedora-release-identity-sericea < 1:%{version}-%{release}
 Provides:       fedora-release-identity-sericea = 1:%{version}-%{release}
 
 %description identity-sericea
-Provides the necessary files for an Asahi Fedora Remix installation that is identifying
-itself as Asahi Fedora Remix Sericea.
+Provides the necessary files for an Hikari Fedora Remix installation that is identifying
+itself as Hikari Fedora Remix Sericea.
 %endif
 
 
@@ -1183,8 +1326,9 @@ sed 's|@@VERSION@@|%{dist_version}|g' %{SOURCE2} >licenses/Fedora-Legal-README.t
 
 %install
 install -d %{buildroot}%{_prefix}/lib
-echo "Fedora release %{version} (%{release_name})" > %{buildroot}%{_prefix}/lib/fedora-release
-echo "cpe:/o:fedoraproject:fedora:%{version}" > %{buildroot}%{_prefix}/lib/system-release-cpe
+install -Dm0644 %{SOURCE29} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/hikari-logo-icon.svg
+echo "Hikari Fedora Remix release %{version} (%{release_name})" > %{buildroot}%{_prefix}/lib/fedora-release
+echo "cpe:/o:hikarilinux:hikari_fedora_remix:%{version}" > %{buildroot}%{_prefix}/lib/system-release-cpe
 
 # Symlink the -release files
 install -d %{buildroot}%{_sysconfdir}
@@ -1212,16 +1356,16 @@ ln -s fedora-release %{buildroot}%{_sysconfdir}/system-release
 # Name of vendor / name of distribution. Typically used to identify where
 # the binary comes from in --help or --version messages of programs.
 # Examples: gdb.spec, clang.spec
-%global dist_vendor Fedora Asahi
-%global dist_name   Asahi Fedora Linux Remix
+%global dist_vendor Hikari Linux
+%global dist_name   Hikari Fedora Remix
 
 # URL of the homepage of the distribution
 # Example: gstreamer1-plugins-base.spec
-%global dist_home_url https://pagure.io/fedora-asahi/project
+%global dist_home_url https://github.com/HikariLinux/hikari-fedora-remix-release
 
 # Bugzilla / bug reporting URLs shown to users.
 # Examples: gcc.spec
-%global dist_bug_report_url https://bugzilla.redhat.com/
+%global dist_bug_report_url https://github.com/HikariLinux/hikari-fedora-remix-release/issues
 
 # debuginfod server, as used in elfutils.spec.
 %global dist_debuginfod_url https://debuginfod.fedoraproject.org/
@@ -1230,19 +1374,19 @@ ln -s fedora-release %{buildroot}%{_sysconfdir}/system-release
 cat << EOF >> os-release
 NAME="%{dist_name}"
 VERSION="%{dist_version} (%{release_name}%{?prerelease})"
-ID=asahi-fedora-remix
+ID=hikari-fedora-remix
 ID_LIKE=fedora
 VERSION_ID=%{dist_version}
 VERSION_CODENAME=""
 PLATFORM_ID="platform:f%{dist_version}"
-PRETTY_NAME="Asahi Fedora Linux Remix %{dist_version} (%{release_name}%{?prerelease})"
+PRETTY_NAME="Hikari Fedora Remix %{dist_version} (%{release_name}%{?prerelease})"
 ANSI_COLOR="0;38;2;60;110;180"
-LOGO=fedora-logo-icon
-CPE_NAME="cpe:/o:fedoraproject:asahi-fedora-remix:%{dist_version}"
-DEFAULT_HOSTNAME="fedora"
+LOGO=hikari-logo-icon
+CPE_NAME="cpe:/o:hikarilinux:hikari_fedora_remix:%{dist_version}"
+DEFAULT_HOSTNAME="hikari"
 HOME_URL="%{dist_home_url}"
 DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora/%{doc_version}/system-administrators-guide/"
-SUPPORT_URL="https://ask.fedoraproject.org/"
+SUPPORT_URL="https://github.com/HikariLinux/hikari-fedora-remix-release/issues"
 BUG_REPORT_URL="%{dist_bug_report_url}"
 REDHAT_BUGZILLA_PRODUCT="Fedora"
 REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
@@ -1281,7 +1425,7 @@ cp -p os-release \
 echo "VARIANT=\"Cinnamon\"" >> %{buildroot}%{_prefix}/lib/os-release.cinnamon
 echo "VARIANT_ID=cinnamon" >> %{buildroot}%{_prefix}/lib/os-release.cinnamon
 sed -i -e "s|(%{release_name}%{?prerelease})|(Cinnamon%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.cinnamon
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cinnamon/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cinnamon
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cinnamon/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.cinnamon
 %endif
 
 %if %{with cloud}
@@ -1291,7 +1435,7 @@ cp -p os-release \
 echo "VARIANT=\"Cloud Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.cloud
 echo "VARIANT_ID=cloud" >> %{buildroot}%{_prefix}/lib/os-release.cloud
 sed -i -e "s|(%{release_name}%{?prerelease})|(Cloud Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.cloud
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cloud/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cloud/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.cloud
 sed -i -e "/^DEFAULT_HOSTNAME=/d" %{buildroot}%{_prefix}/lib/os-release.cloud
 %endif
 
@@ -1303,8 +1447,8 @@ echo "VARIANT=\"Comp Neuro\"" >> %{buildroot}%{_prefix}/lib/os-release.compneuro
 echo "VARIANT_ID=compneuro" >> %{buildroot}%{_prefix}/lib/os-release.compneuro
 sed -i -e "s|(%{release_name}%{?prerelease})|(CompNeuro%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.compneuro
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://neuro.fedoraproject.org"|' %{buildroot}%{_prefix}/lib/os-release.compneuro
-sed -i -e 's|HOME_URL=.*|HOME_URL="https://labs.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.compneuro
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/CompNeuro/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.compneuro
+
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/CompNeuro/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.compneuro
 %endif
 
 %if %{with container}
@@ -1314,7 +1458,7 @@ cp -p os-release \
 echo "VARIANT=\"Container Image\"" >> %{buildroot}%{_prefix}/lib/os-release.container
 echo "VARIANT_ID=container" >> %{buildroot}%{_prefix}/lib/os-release.container
 sed -i -e "s|(%{release_name}%{?prerelease})|(Container Image%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.container
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Container/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.container
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Container/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.container
 %endif
 
 %if %{with coreos}
@@ -1325,11 +1469,11 @@ echo "VARIANT=\"CoreOS\"" >> %{buildroot}%{_prefix}/lib/os-release.coreos
 echo "VARIANT_ID=coreos" >> %{buildroot}%{_prefix}/lib/os-release.coreos
 sed -i -e "s|(%{release_name}%{?prerelease})|(CoreOS%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.coreos
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-coreos/"|' %{buildroot}%{_prefix}/lib/os-release.coreos
-sed -i -e 's|HOME_URL=.*|HOME_URL="https://getfedora.org/coreos/"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
-sed -i -e 's|SUPPORT_URL=.*|SUPPORT_URL="https://github.com/coreos/fedora-coreos-tracker/"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
-sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://github.com/coreos/fedora-coreos-tracker/"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
-sed -i -e 's|PRETTY_NAME=.*|PRETTY_NAME="Fedora CoreOS %{dist_version}"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/CoreOS/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.coreos
+
+
+
+sed -i -e 's|PRETTY_NAME=.*|PRETTY_NAME="Hikari Fedora Remix CoreOS %{dist_version}"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/CoreOS/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.coreos
 sed -i -e "/^DEFAULT_HOSTNAME=/d" %{buildroot}%{_prefix}/lib/os-release.coreos
 install -Dm0644 %{SOURCE22} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE28} -t %{buildroot}%{_prefix}/lib/systemd/system.conf.d/
@@ -1345,8 +1489,8 @@ echo "VARIANT=\"Design Suite\"" >> %{buildroot}%{_prefix}/lib/os-release.designs
 echo "VARIANT_ID=designsuite" >> %{buildroot}%{_prefix}/lib/os-release.designsuite
 sed -i -e "s|(%{release_name}%{?prerelease})|(Design Suite%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.designsuite
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://fedoraproject.org/wiki/Design_Suite"|' %{buildroot}%{_prefix}/lib/os-release.designsuite
-sed -i -e 's|HOME_URL=.*|HOME_URL="https://labs.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.designsuite
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/DesignSuite/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.designsuite
+
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/DesignSuite/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.designsuite
 %endif
 
 %if %{with eln}
@@ -1356,10 +1500,10 @@ cp -p os-release \
 echo "VARIANT=\"ELN\"" >> %{buildroot}%{_prefix}/lib/os-release.eln
 echo "VARIANT_ID=eln" >> %{buildroot}%{_prefix}/lib/os-release.eln
 sed -i -e 's|PLATFORM_ID=.*|PLATFORM_ID="platform:eln"|' %{buildroot}/%{_prefix}/lib/os-release.eln
-sed -i -e 's|PRETTY_NAME=.*|PRETTY_NAME="Fedora ELN"|' %{buildroot}/%{_prefix}/lib/os-release.eln
+sed -i -e 's|PRETTY_NAME=.*|PRETTY_NAME="Hikari Fedora Remix ELN"|' %{buildroot}/%{_prefix}/lib/os-release.eln
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/eln/"|' %{buildroot}%{_prefix}/lib/os-release.eln
 sed -i -e "/^DEFAULT_HOSTNAME=/d" %{buildroot}%{_prefix}/lib/os-release.eln
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/ELN/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.eln
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/ELN/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.eln
 %endif
 
 %if %{with iot}
@@ -1369,7 +1513,7 @@ cp -p os-release \
 echo "VARIANT=\"IoT Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.iot
 echo "VARIANT_ID=iot" >> %{buildroot}%{_prefix}/lib/os-release.iot
 sed -i -e "s|(%{release_name}%{?prerelease})|(IoT Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.iot
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/IoT/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/IoT/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.iot
 sed -i -e "/^DEFAULT_HOSTNAME=/d" %{buildroot}%{_prefix}/lib/os-release.iot
 install -p %{SOURCE23} %{buildroot}/%{_prefix}/lib/
 install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
@@ -1383,7 +1527,7 @@ cp -p os-release \
 echo "VARIANT=\"KDE Plasma\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
 sed -i -e "s|(%{release_name}%{?prerelease})|(KDE Plasma%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.kde
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/KDE/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/KDE/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.kde
 # Add plasma-desktop to dnf protected packages list for KDE
 install -Dm0644 %{SOURCE25} -t %{buildroot}%{_sysconfdir}/dnf/protected.d/
 %endif
@@ -1395,7 +1539,7 @@ cp -p os-release \
 echo "VARIANT=\"MATE-Compiz\"" >> %{buildroot}%{_prefix}/lib/os-release.matecompiz
 echo "VARIANT_ID=matecompiz" >> %{buildroot}%{_prefix}/lib/os-release.matecompiz
 sed -i -e "s|(%{release_name}%{?prerelease})|(MATE-Compiz%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.matecompiz
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/MATE-Compiz/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.matecompiz
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/MATE-Compiz/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.matecompiz
 %endif
 
 %if %{with server}
@@ -1405,7 +1549,7 @@ cp -p os-release \
 echo "VARIANT=\"Server Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.server
 echo "VARIANT_ID=server" >> %{buildroot}%{_prefix}/lib/os-release.server
 sed -i -e "s|(%{release_name}%{?prerelease})|(Server Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.server
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Server/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.server
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Server/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.server
 sed -i -e "/^DEFAULT_HOSTNAME=/d" %{buildroot}%{_prefix}/lib/os-release.server
 install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 %endif
@@ -1418,9 +1562,9 @@ echo "VARIANT=\"Silverblue\"" >> %{buildroot}%{_prefix}/lib/os-release.silverblu
 echo "VARIANT_ID=silverblue" >> %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -i -e "s|(%{release_name}%{?prerelease})|(Silverblue%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-silverblue/"|' %{buildroot}%{_prefix}/lib/os-release.silverblue
-sed -i -e 's|HOME_URL=.*|HOME_URL="https://silverblue.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.silverblue
-sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://github.com/fedora-silverblue/issue-tracker/issues"|' %{buildroot}/%{_prefix}/lib/os-release.silverblue
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Silverblue/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
+
+
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Silverblue/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.silverblue
 %endif
 
 %if %{with kinoite}
@@ -1431,9 +1575,9 @@ echo "VARIANT=\"Kinoite\"" >> %{buildroot}%{_prefix}/lib/os-release.kinoite
 echo "VARIANT_ID=kinoite" >> %{buildroot}%{_prefix}/lib/os-release.kinoite
 sed -i -e "s|(%{release_name}%{?prerelease})|(Kinoite%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.kinoite
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-kinoite/"|' %{buildroot}%{_prefix}/lib/os-release.kinoite
-sed -i -e 's|HOME_URL=.*|HOME_URL="https://kinoite.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.kinoite
-sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://pagure.io/fedora-kde/SIG/issues"|' %{buildroot}/%{_prefix}/lib/os-release.kinoite
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Kinoite/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
+
+
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Kinoite/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.kinoite
 %endif
 
 %if %{with snappy}
@@ -1443,7 +1587,7 @@ cp -p os-release \
 echo "VARIANT=\"Snappy\"" >> %{buildroot}%{_prefix}/lib/os-release.snappy
 echo "VARIANT_ID=snappy" >> %{buildroot}%{_prefix}/lib/os-release.snappy
 sed -i -e "s|(%{release_name}%{?prerelease})|(Snappy%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.snappy
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Snappy/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.snappy
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Snappy/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.snappy
 %endif
 
 %if %{with soas}
@@ -1453,7 +1597,7 @@ cp -p os-release \
 echo "VARIANT=\"Sugar on a Stick\"" >> %{buildroot}%{_prefix}/lib/os-release.soas
 echo "VARIANT_ID=soas" >> %{buildroot}%{_prefix}/lib/os-release.soas
 sed -i -e "s|(%{release_name}%{?prerelease})|(Sugar on a Stick%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.soas
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Sugar/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.soas
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Sugar/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.soas
 %endif
 
 %if %{with workstation}
@@ -1463,7 +1607,7 @@ cp -p os-release \
 echo "VARIANT=\"Workstation Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.workstation
 echo "VARIANT_ID=workstation" >> %{buildroot}%{_prefix}/lib/os-release.workstation
 sed -i -e "s|(%{release_name}%{?prerelease})|(Workstation Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.workstation
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Workstation/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Workstation/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.workstation
 # Add Fedora Workstation dnf protected packages list
 install -Dm0644 %{SOURCE21} -t %{buildroot}%{_sysconfdir}/dnf/protected.d/
 %endif
@@ -1500,7 +1644,7 @@ cp -p os-release \
 echo "VARIANT=\"Xfce\"" >> %{buildroot}%{_prefix}/lib/os-release.xfce
 echo "VARIANT_ID=xfce" >> %{buildroot}%{_prefix}/lib/os-release.xfce
 sed -i -e "s|(%{release_name}%{?prerelease})|(Xfce%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.xfce
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Xfce/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.xfce
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Xfce/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.xfce
 %endif
 
 %if %{with i3}
@@ -1508,7 +1652,7 @@ cp -p os-release %{buildroot}%{_prefix}/lib/os-release.i3
 echo "VARIANT=\"i3\"" >> %{buildroot}%{_prefix}/lib/os-release.i3
 echo "VARIANT_ID=i3" >> %{buildroot}%{_prefix}/lib/os-release.i3
 sed -i -e "s|(%{release_name}%{?prerelease})|(i3%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.i3
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/i3/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.i3
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/i3/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.i3
 %endif
 
 %if %{with lxqt}
@@ -1518,7 +1662,7 @@ cp -p os-release \
 echo "VARIANT=\"LXQt\"" >> %{buildroot}%{_prefix}/lib/os-release.lxqt
 echo "VARIANT_ID=lxqt" >> %{buildroot}%{_prefix}/lib/os-release.lxqt
 sed -i -e "s|(%{release_name}%{?prerelease})|(LXQt%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.lxqt
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/LXQt/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.lxqt
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/LXQt/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.lxqt
 %endif
 
 %if %{with budgie}
@@ -1528,7 +1672,7 @@ cp -p os-release \
 echo "VARIANT=\"Budgie\"" >> %{buildroot}%{_prefix}/lib/os-release.budgie
 echo "VARIANT_ID=budgie" >> %{buildroot}%{_prefix}/lib/os-release.budgie
 sed -i -e "s|(%{release_name}%{?prerelease})|(Budgie%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.budgie
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Budgie/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.budgie
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Budgie/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.budgie
 %endif
 
 %if %{with sway}
@@ -1536,8 +1680,8 @@ cp -p os-release %{buildroot}%{_prefix}/lib/os-release.sway
 echo "VARIANT=\"Sway\"" >> %{buildroot}%{_prefix}/lib/os-release.sway
 echo "VARIANT_ID=sway" >> %{buildroot}%{_prefix}/lib/os-release.sway
 sed -i -e "s|(%{release_name}%{?prerelease})|(Sway%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.sway
-sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://gitlab.com/fedora/sigs/sway/SIG/-/issues"|' %{buildroot}/%{_prefix}/lib/os-release.sway
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Sway/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.sway
+
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Sway/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.sway
 %endif
 
 %if %{with sericea}
@@ -1545,8 +1689,8 @@ cp -p os-release %{buildroot}%{_prefix}/lib/os-release.sericea
 echo "VARIANT=\"Sericea\"" >> %{buildroot}%{_prefix}/lib/os-release.sericea
 echo "VARIANT_ID=sericea" >> %{buildroot}%{_prefix}/lib/os-release.sericea
 sed -i -e "s|(%{release_name}%{?prerelease})|(Sericea%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.sericea
-sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://gitlab.com/fedora/sigs/sway/SIG/-/issues"|' %{buildroot}/%{_prefix}/lib/os-release.sericea
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Sericea/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.sericea
+
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Sericea/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.sericea
 %endif
 
 # Create the symlink for /etc/os-release
@@ -1590,7 +1734,7 @@ install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 
 # Create distro-level SWID tag file
 install -d %{buildroot}%{_swidtagdir}
-sed -e "s#\$version#%{bug_version}#g" -e 's/<!--.*-->//;/^$/d' %{SOURCE19} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
+sed -e "s#\$version#%{bug_version}#g" -e 's/<!--.*-->//;/^$/d' %{SOURCE19} > %{buildroot}%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-%{bug_version}.swidtag
 install -d %{buildroot}%{_sysconfdir}/swid/swidtags.d
 ln -s --relative %{buildroot}%{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.org
 
@@ -1604,6 +1748,7 @@ EOF
 
 
 %files common
+%{_datadir}/icons/hicolor/scalable/apps/hikari-logo-icon.svg
 %license licenses/LICENSE licenses/Fedora-Legal-README.txt
 %{_prefix}/lib/fedora-release
 %{_prefix}/lib/system-release-cpe
@@ -1626,7 +1771,7 @@ EOF
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 %dir %{_swidtagdir}
-%{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
+%{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-%{bug_version}.swidtag
 %dir %{_sysconfdir}/swid
 %{_sysconfdir}/swid/swidtags.d
 %dir %{_datadir}/dnf/plugins
@@ -1644,7 +1789,7 @@ EOF
 %files cinnamon
 %files identity-cinnamon
 %{_prefix}/lib/os-release.cinnamon
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cinnamon
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.cinnamon
 %endif
 
 
@@ -1652,7 +1797,7 @@ EOF
 %files cloud
 %files identity-cloud
 %{_prefix}/lib/os-release.cloud
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.cloud
 %endif
 
 
@@ -1660,7 +1805,7 @@ EOF
 %files compneuro
 %files identity-compneuro
 %{_prefix}/lib/os-release.compneuro
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.compneuro
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.compneuro
 %endif
 
 
@@ -1668,7 +1813,7 @@ EOF
 %files container
 %files identity-container
 %{_prefix}/lib/os-release.container
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.container
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.container
 %endif
 
 
@@ -1679,7 +1824,7 @@ EOF
 %{_prefix}/lib/systemd/system.conf.d/longer-default-shutdown-timeout.conf
 %{_prefix}/lib/systemd/user.conf.d/longer-default-shutdown-timeout.conf
 %{_prefix}/lib/os-release.coreos
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.coreos
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.coreos
 %endif
 
 
@@ -1687,7 +1832,7 @@ EOF
 %files designsuite
 %files identity-designsuite
 %{_prefix}/lib/os-release.designsuite
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.designsuite
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.designsuite
 %endif
 
 
@@ -1695,7 +1840,7 @@ EOF
 %files eln
 %files identity-eln
 %{_prefix}/lib/os-release.eln
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.eln
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.eln
 %endif
 
 
@@ -1705,7 +1850,7 @@ EOF
 %{_prefix}/lib/os-release.iot
 %{_prefix}/lib/systemd/system-preset/80-iot.preset
 %{_prefix}/lib/systemd/user-preset/80-iot-user.preset
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.iot
 %{_prefix}/lib/zezere-ignition-url
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
@@ -1717,7 +1862,7 @@ EOF
 %{_prefix}/lib/os-release.kde
 %{_prefix}/lib/systemd/system-preset/80-kde.preset
 %{_prefix}/lib/systemd/system-preset/81-desktop.preset
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.kde
 %{_sysconfdir}/dnf/protected.d/plasma-desktop.conf
 %endif
 
@@ -1726,7 +1871,7 @@ EOF
 %files matecompiz
 %files identity-matecompiz
 %{_prefix}/lib/os-release.matecompiz
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.matecompiz
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.matecompiz
 %endif
 
 
@@ -1735,7 +1880,7 @@ EOF
 %files identity-server
 %{_prefix}/lib/os-release.server
 %{_prefix}/lib/systemd/system-preset/80-server.preset
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.server
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.server
 %endif
 
 
@@ -1743,7 +1888,7 @@ EOF
 %files silverblue
 %files identity-silverblue
 %{_prefix}/lib/os-release.silverblue
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.silverblue
 # Keep this in sync with workstation below
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
@@ -1758,7 +1903,7 @@ EOF
 %{_prefix}/lib/os-release.kinoite
 %{_prefix}/lib/systemd/system-preset/80-kde.preset
 %{_prefix}/lib/systemd/system-preset/81-desktop.preset
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.kinoite
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
 
@@ -1773,7 +1918,7 @@ EOF
 %files snappy
 %files identity-snappy
 %{_prefix}/lib/os-release.snappy
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.snappy
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.snappy
 %endif
 
 
@@ -1781,7 +1926,7 @@ EOF
 %files soas
 %files identity-soas
 %{_prefix}/lib/os-release.soas
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.soas
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.soas
 %endif
 
 
@@ -1789,7 +1934,7 @@ EOF
 %files workstation
 %files identity-workstation
 %{_prefix}/lib/os-release.workstation
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.workstation
 %{_sysconfdir}/dnf/protected.d/fedora-workstation.conf
 # Keep this in sync with silverblue above
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
@@ -1802,7 +1947,7 @@ EOF
 %files xfce
 %files identity-xfce
 %{_prefix}/lib/os-release.xfce
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.xfce
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.xfce
 %endif
 
 
@@ -1810,7 +1955,7 @@ EOF
 %files i3
 %files identity-i3
 %{_prefix}/lib/os-release.i3
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.i3
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.i3
 %endif
 
 
@@ -1818,14 +1963,14 @@ EOF
 %files lxqt
 %files identity-lxqt
 %{_prefix}/lib/os-release.lxqt
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.lxqt
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.lxqt
 %endif
 
 %if %{with budgie}
 %files budgie
 %files identity-budgie
 %{_prefix}/lib/os-release.budgie
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.budgie
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.budgie
 %endif
 
 
@@ -1833,7 +1978,7 @@ EOF
 %files sway
 %files identity-sway
 %{_prefix}/lib/os-release.sway
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.sway
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.sway
 %{_prefix}/lib/systemd/system-preset/81-desktop.preset
 %endif
 
@@ -1842,7 +1987,7 @@ EOF
 %files sericea
 %files identity-sericea
 %{_prefix}/lib/os-release.sericea
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.sericea
+%attr(0644,root,root) %{_swidtagdir}/io.github.HikariLinux.HikariFedoraRemix-edition.swidtag.sericea
 %{_prefix}/lib/systemd/system-preset/81-desktop.preset
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
